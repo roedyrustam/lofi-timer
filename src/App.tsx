@@ -6,11 +6,13 @@ import { Settings } from './components/Settings';
 import './App.css';
 
 function App() {
-  const { timeLeft, isRunning, mode, backgroundAudioId, startTimer, pauseTimer, resetTimer, tick, setMode } = useTimerStore();
+  const { timeLeft, isRunning, mode, focusDuration, breakDuration, backgroundAudioId, startTimer, pauseTimer, resetTimer, tick, setMode } = useTimerStore();
   const audioRef = useRef<HTMLAudioElement>(null);
   const [volume, setVolume] = useState(0.5);
 
   const currentTrack = AUDIO_TRACKS.find(t => t.id === backgroundAudioId) || AUDIO_TRACKS[0];
+  const totalDuration = mode === 'focus' ? focusDuration : breakDuration;
+  const progressPercentage = totalDuration > 0 ? (timeLeft / totalDuration) * 100 : 0;
 
   useEffect(() => {
     let interval: number;
@@ -73,6 +75,26 @@ function App() {
         {/* Timer Display */}
         <div className="bg-retro-dark text-retro-light px-8 py-6 rounded-xl retro-border my-2">
           <div className="text-7xl font-pixel tracking-widest">{timeString}</div>
+        </div>
+
+        {/* Coffee Cup Pomodoro Animation */}
+        <div className="flex flex-col items-center mb-4">
+          <div className="flex items-center justify-center relative">
+            {/* Cup Handle */}
+            <div className="absolute -right-5 top-2 w-8 h-10 border-4 border-retro-dark rounded-r-xl" />
+            
+            {/* Cup Body */}
+            <div className="w-16 h-20 border-4 border-retro-dark rounded-b-2xl relative overflow-hidden bg-retro-light z-10 retro-border-sm">
+              {/* Coffee Liquid */}
+              <div 
+                className={`absolute bottom-0 left-0 right-0 transition-all duration-1000 ease-linear ${mode === 'focus' ? 'bg-[#6F4E37]' : 'bg-[#a8d8ea]'}`}
+                style={{ height: `${progressPercentage}%` }}
+              >
+                {/* Surface highlight */}
+                <div className="absolute top-0 left-0 w-full h-1 bg-white/40" />
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Controls */}

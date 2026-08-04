@@ -13,4 +13,4 @@
 - [x] Menambahkan daftar periksa tugas (To-Do List) ringan di dalam aplikasi.
 - [x] Opsi penggantian *background noise* (misal: suara hujan, kafe, atau ombak laut).
 - [x] Pengaturan waktu timer yang bisa disesuaikan pengguna (selain default 25 menit).
-- [ ] Efek animasi pomodoro (misal: kopi yang perlahan habis saat timer berjalan).
+- [x] Efek animasi pomodoro (misal: kopi yang perlahan habis saat timer berjalan).
